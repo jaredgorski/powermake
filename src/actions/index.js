@@ -13,7 +13,8 @@ function buildConfigActions() {
         const {command} = action;
 
         if (command) {
-          actions[name] = () => {
+          actions[name] = (proc, logx) => {
+            logx.logHandler(proc, logx.logData);
             return handleShellType(command);
           };
         } else {

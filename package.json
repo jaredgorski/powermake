@@ -1,0 +1,29 @@
+{
+  "name": "powermake",
+  "version": "0.0.0-pre2",
+  "description": "Utility for automating macros depending on conditions",
+  "bin": {
+    "powermake": "bin/index.js",
+    "pm": "bin/index.js"
+  },
+  "directories": {
+    "src": "./src"
+  },
+  "files": [
+    "bin/*",
+    "src/*"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaredgorski/powermake"
+  },
+  "author": "Jared Gorski",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "3.13.1",
+    "yargs": "13.3.0"
+  }
+}

@@ -1,23 +1,25 @@
 const RegisteredActions = {
-  logSuppress: 'logSuppress',
+  disconnect: 'disconnect',
   error: 'error',
-  pmexit: 'pmexit',
   kill: 'kill',
+  logger: 'logger',
+  logSuppress: 'logSuppress',
+  pmexit: 'pmexit',
 };
 
 const builtin = {
-  error: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
-    logSnippet('error', logx);
-
-    throw new Error(`> POWERMAKE: ERR: ${logx.logData.snippets.error}`);
-  },
   disconnect: (proc, logx) => {
     logx.logHandler(proc, logx.logData);
     logSnippet('disconnect', logx);
 
     proc.child.disconnect();
     console.log(`> POWERMAKE: Process ${proc.name.toUpperCase()} disconnected`);
+  },
+  error: (proc, logx) => {
+    logx.logHandler(proc, logx.logData);
+    logSnippet('error', logx);
+
+    throw new Error(`> POWERMAKE: ERR: ${logx.logData.snippets.error}`);
   },
   kill: (proc, logx) => {
     logx.logHandler(proc, logx.logData);

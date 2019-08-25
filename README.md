@@ -6,6 +6,7 @@ powermake executes a user-defined macro which runs a process or series of proces
 
 ## Synopsis
 ```shell
-pm make [-p PROFILE]
-pm setup [OPTION] [PROFILE | CONFIG]  # under construction
+pwm make [-p PROFILE]
+pwm setup [OPTION] [PROFILE | CONFIG]  # under construction
 ```
+

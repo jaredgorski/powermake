@@ -1,5 +1,8 @@
 const {buildConfig} = require('./shared');
 
+/**
+ * Performs program preparation.
+ */
 function prepare() {
   try {
     buildConfig();
@@ -8,6 +11,9 @@ function prepare() {
   }
 }
 
+/**
+ * Main function.
+ */
 function execute() {
   prepare();
 
@@ -16,10 +22,7 @@ function execute() {
   const setup = require('./commands/setup');
   const yargs = require('yargs');
 
-  const commands = [
-    make,
-    setup,
-  ].sort((cmd1, cmd2) => {
+  const commands = [make, setup].sort((cmd1, cmd2) => {
     return cmd1.name > cmd2.name;
   });
 

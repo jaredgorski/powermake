@@ -3,8 +3,8 @@ const BuiltinActions = {
   error: 'error',
   kill: 'kill',
   logger: 'logger',
-  logSuppress: 'logSuppress',
-  pmexit: 'pmexit',
+  pwmexit: 'pwmexit',
+  silence: 'silence',
 };
 
 const builtin = {
@@ -28,17 +28,22 @@ const builtin = {
   logger: (proc, logx) => {
     logx.logHandler(proc, logx);
   },
-  logSuppress: () => {
-    // no-op, fulfilled in action handler
-  },
-  pmexit: (proc, logx) => {
-    logTriggerSnippet('pmexit', logx);
+  pwmexit: (proc, logx) => {
+    logTriggerSnippet('pwmexit', logx);
 
     console.log(`> POWERMAKE: powermake exited`);
     process.exit();
   },
-}
+  silence: () => {
+    // no-op, fulfilled in action handler
+  },
+};
 
+/**
+ * Handles logging of trigger snippets.
+ * @param {string} action  The action whose snippet to log
+ * @param {object} logx  The logging object
+ */
 function logTriggerSnippet(action, logx) {
   const snippet = logx.logData.snippets[action];
 
@@ -50,5 +55,4 @@ function logTriggerSnippet(action, logx) {
 module.exports = {
   builtin,
   BuiltinActions,
-}
-
+};

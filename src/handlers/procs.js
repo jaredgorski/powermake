@@ -1,5 +1,9 @@
 const {outputHandler} = require('./output');
 
+/**
+ * Handles procs and forwards their output.
+ * @param {object} procs  An object containing the current processes
+ */
 function procsHandler(procs) {
   for (const key of Object.keys(procs)) {
     const proc = procs[key];
@@ -16,4 +20,4 @@ function procsHandler(procs) {
   }
 }
 
-module.exports = {procsHandler}
+module.exports = {procsHandler};

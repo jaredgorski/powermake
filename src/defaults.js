@@ -1,46 +1,48 @@
-const path = require('path');
 const homedir = require('os').homedir();
+const path = require('path');
 
-const pmHomeDir = path.join(homedir, '.powermake/');
-const configFile = path.join(pmHomeDir, 'pmconfig.yaml');
-const demoProfileDir = path.join(pmHomeDir, 'demo/');
-const demoProfileFile = path.join(demoProfileDir, 'pm_demo.pmprofile.yaml');
-const profileExtension = '.pmprofile.yaml';
+const pwmHomeDir = path.join(homedir, '.powermake/');
+const configFile = path.join(pwmHomeDir, 'pwmrc.yaml');
+const profileExtension = '.pwmpr.yaml';
+const demoProfileDir = path.join(pwmHomeDir, 'demo/');
+const demoProfileFile = path.join(
+  demoProfileDir,
+  `pwm_demo${profileExtension}`
+);
 
+/* eslint-disable */
 const defaultConfig = {
-  profile: 'demo/pm_demo',
+  profile: 'demo/pwm_demo',
 };
 
 const demoProfile = {
   processes: [
     {
-      name: 'pm_demo',
-      command: 'echo \"Selected profile not configered! Triggering: Error\"',
-      stdout: true,
+      name: 'pwm_demo',
+      command: 'echo "Selected profile not configered! Triggering: Error"',
+      silent: false,
     },
   ],
   monitors: [
     {
-      process: 'pm_demo',
+      process: 'pwm_demo',
       triggers: {
         logs: {
           includesString: 'Error',
         },
       },
-      actions: [
-        'echoMe',
-        'kill',
-      ],
+      actions: ['echoMe', 'pwmkill'],
     },
   ],
   actions: [
     {
       name: 'echoMe',
       type: 'shell',
-      command: `echo \"\nTODO: Configure powermake and add profiles at ${pmHomeDir}\n\"`,
+      command: `echo "\nTODO: Configure powermake and add profiles at ${pwmHomeDir}\n"`,
     },
   ],
 };
+/* eslint-enable */
 
 module.exports = {
   configFile,
@@ -48,6 +50,6 @@ module.exports = {
   demoProfile,
   demoProfileDir,
   demoProfileFile,
-  pmHomeDir,
+  pwmHomeDir,
   profileExtension,
-}
+};

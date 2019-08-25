@@ -4,7 +4,7 @@
   "description": "Utility for automating macros depending on conditions",
   "bin": {
     "powermake": "bin/index.js",
-    "pm": "bin/index.js"
+    "pwm": "bin/index.js"
   },
   "directories": {
     "src": "./src"
@@ -14,7 +14,8 @@
     "src/*"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --single-quote --no-bracket-spacing --trailing-comma es5 --write \"{src/**/*.js,tests/**/*.js,*.js}\" && eslint --fix \"{src/**/*.js,tests/**/*.js,*.js}\""
   },
   "repository": {
     "type": "git",
@@ -25,5 +26,13 @@
   "dependencies": {
     "js-yaml": "3.13.1",
     "yargs": "13.3.0"
+  },
+  "devDependencies": {
+    "eslint": "5.16.0",
+    "eslint-config-liferay": "3.0.0",
+    "eslint-plugin-jest": "22.15.2",
+    "eslint-plugin-jsdoc": "7.1.0",
+    "eslint-plugin-sort-requires": "2.1.0",
+    "prettier": "1.17.1"
   }
 }

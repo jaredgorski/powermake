@@ -7,18 +7,21 @@ const {
   demoProfile,
   demoProfileDir,
   demoProfileFile,
-  pmHomeDir,
+  pwmHomeDir,
   profileExtension,
 } = require('./defaults');
 
-const getProfileFilepath = filepath => path.join(pmHomeDir, filepath + profileExtension);
+const getProfileFilepath = filepath =>
+  path.join(pwmHomeDir, filepath + profileExtension);
 
+/**
+ * Builds the current configuration files.
+ */
 function buildConfig() {
   let config = defaultConfig;
-  let profile = demoProfile;
 
-  if (!fs.existsSync(pmHomeDir)) {
-    fs.mkdirSync(pmHomeDir);
+  if (!fs.existsSync(pwmHomeDir)) {
+    fs.mkdirSync(pwmHomeDir);
   }
 
   if (fs.existsSync(configFile)) {
@@ -39,6 +42,9 @@ function buildConfig() {
   }
 }
 
+/**
+ * Retrieves the current configuration data.
+ */
 function getConfig() {
   let config;
   let profile;

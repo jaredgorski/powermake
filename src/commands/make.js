@@ -1,22 +1,26 @@
 const fs = require('fs');
-const shared = require('../shared');
-const {procsHandler} = require('../handlers/procs');
 const path = require('path');
+const shared = require('../shared');
 const spawn = require('child_process').spawn;
+const {procsHandler} = require('../handlers/procs');
 
+/**
+ * Executes the make command.
+ * @param {Array} argv  The args array.
+ */
 async function make(argv) {
-  let configProcesses = shared.config().processes;
-  let argProcess;
+  const configProcesses = shared.config().processes;
 
+  let argProcess;
   if (argv.process) {
     argProcess = configProcesses.filter(p => p.name === argv.process);
   }
 
   const processesToInit = argProcess || configProcesses;
-  const procs = {};
 
-  for (const cfgProc of configProcesses) {
-    const {name, command, cwd, stdout} = cfgProc;
+  const procs = {};
+  for (const procToInit of processesToInit) {
+    const {name, command, cwd, stdout} = procToInit;
 
     if (cwd) {
       const cwdPath = path.normalize(cwd).replace('~', process.env.HOME);
@@ -43,20 +47,14 @@ module.exports = {
   builder(yargs) {
     yargs.option('-p', {
       alias: 'process',
-      describe:
-        'Specify an individual process to run',
+      describe: 'Specify an individual process to run',
       type: 'string',
     });
 
-    yargs.example(
-      'pm make'
-    );
+    yargs.example('pwm make');
 
-    yargs.example(
-      'pm make -p myprocess'
-    );
+    yargs.example('pwm make -p myprocess');
 
     return yargs;
   },
 };
-

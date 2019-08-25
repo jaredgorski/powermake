@@ -1,6 +1,8 @@
-const {builtin} = require('./builtin');
+const {builtin, BuiltinActions} = require('./builtin');
 const cp = require('child_process');
 const shared = require('../shared');
+
+const CustomActions = {};
 
 function buildConfigActions() {
   const actions = {};
@@ -14,9 +16,10 @@ function buildConfigActions() {
 
         if (command) {
           actions[name] = (proc, logx) => {
-            logx.logHandler(proc, logx.logData);
             return handleShellType(command);
           };
+
+          CustomActions[name] = name.toString();
         } else {
           throw new Error(`No shell command configured for ${name}.`);
         }
@@ -42,4 +45,7 @@ function handleShellType(command) {
   });
 }
 
-module.exports = Object.assign({}, builtin, buildConfigActions());
+module.exports = {
+  actions: Object.assign({}, builtin, buildConfigActions()),
+  RegisteredActions: Object.assign({}, CustomActions, BuiltinActions),
+}

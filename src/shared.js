@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const {RegisteredActions} = require('./actions/builtin');
 const {
   configFile,
   defaultConfig,
@@ -30,8 +29,13 @@ function buildConfig() {
 
   const profileFile = getProfileFilepath(config.profile);
   if (!fs.existsSync(profileFile)) {
-    fs.mkdirSync(demoProfileDir);
-    fs.writeFileSync(demoProfileFile, yaml.dump(demoProfile));
+    if (!fs.existsSync(demoProfileDir)) {
+      fs.mkdirSync(demoProfileDir);
+    }
+
+    if (!fs.existsSync(demoProfileFile)) {
+      fs.writeFileSync(demoProfileFile, yaml.dump(demoProfile));
+    }
   }
 }
 
@@ -58,7 +62,6 @@ function getConfig() {
 const shared = {
   buildConfig,
   config: () => getConfig(),
-  registeredActions: RegisteredActions,
 };
 
 module.exports = shared;

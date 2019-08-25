@@ -1,4 +1,4 @@
-const RegisteredActions = {
+const BuiltinActions = {
   disconnect: 'disconnect',
   error: 'error',
   kill: 'kill',
@@ -9,41 +9,37 @@ const RegisteredActions = {
 
 const builtin = {
   disconnect: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
-    logSnippet('disconnect', logx);
+    logTriggerSnippet('disconnect', logx);
 
     proc.child.disconnect();
     console.log(`> POWERMAKE: Process ${proc.name.toUpperCase()} disconnected`);
   },
   error: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
-    logSnippet('error', logx);
+    logTriggerSnippet('error', logx);
 
     throw new Error(`> POWERMAKE: ERR: ${logx.logData.snippets.error}`);
   },
   kill: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
-    logSnippet('kill', logx);
+    logTriggerSnippet('kill', logx);
 
     proc.child.kill();
     console.log(`> POWERMAKE: Process ${proc.name.toUpperCase()} killed`);
   },
   logger: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
+    logx.logHandler(proc, logx);
   },
   logSuppress: () => {
-    // no-op
+    // no-op, fulfilled in action handler
   },
   pmexit: (proc, logx) => {
-    logx.logHandler(proc, logx.logData);
-    logSnippet('pmexit', logx);
+    logTriggerSnippet('pmexit', logx);
 
     console.log(`> POWERMAKE: powermake exited`);
     process.exit();
   },
 }
 
-function logSnippet(action, logx) {
+function logTriggerSnippet(action, logx) {
   const snippet = logx.logData.snippets[action];
 
   if (snippet) {
@@ -53,6 +49,6 @@ function logSnippet(action, logx) {
 
 module.exports = {
   builtin,
-  RegisteredActions,
+  BuiltinActions,
 }
 

@@ -1,8 +1,8 @@
 const shared = require('../shared');
 
-function logHandler(proc, logData) {
+function logHandler(proc, logx) {
   if (proc.stdout) {
-    console.log(logData.message);
+    console.log(logx.logData.message);
   }
 }
 

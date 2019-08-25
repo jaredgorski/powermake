@@ -1,6 +1,6 @@
 {
   "name": "powermake",
-  "version": "0.0.0-pre2",
+  "version": "0.0.0-pre3",
   "description": "Utility for automating macros depending on conditions",
   "bin": {
     "powermake": "bin/index.js",

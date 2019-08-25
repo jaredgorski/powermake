@@ -1,19 +1,27 @@
-const actions = require('../actions/index');
+const {actions, RegisteredActions} = require('../actions/index');
 const {logHandler} = require('./log');
 
-function actionHandler(toExec, proc, logData) {
+function actionHandler(execActions, proc, logData) {
+  const actionSet = getActionSet(execActions);
   const logx = {
     logData,
     logHandler,
   };
 
-  if (toExec.length) {
-    for (const action of toExec) {
-      actions[action].call(null, proc, logx);
-    }
-  } else {
-    actions['logger'].call(null, proc, logx);
+  for (const action of actionSet) {
+    actions[action].call(null, proc, logx);
   }
+}
+
+function getActionSet(execActions) {
+  execActions.unshift(RegisteredActions.logger);
+  const actionSet = new Set(execActions);
+
+  if (actionSet.has(RegisteredActions.logSuppress)) {
+    actionSet.delete(RegisteredActions.logger);
+  }
+
+  return actionSet;
 }
 
 module.exports = {actionHandler}

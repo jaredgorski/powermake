@@ -1,6 +1,10 @@
 const shared = require('../shared');
 const {createLogger, format, transports} = require('winston');
 
+const noLevelFormat = format.printf(({message}) => {
+  return `${message}`;
+});
+
 const pwmInfoFormat = format.printf(({message, isErr, timestamp = ''}) => {
   let secondary = ' ';
 
@@ -14,24 +18,24 @@ const pwmInfoFormat = format.printf(({message, isErr, timestamp = ''}) => {
 const logFormat = () => {
   const {logging} = shared.config();
 
-  if (logging.timestamp) {
-    return format.combine(
-      format.timestamp({format: 'YYYY-MM-DD HH:mm:ss.SSS'}),
-      pwmInfoFormat
-    );
+  if (logging.sidebar) {
+    if (logging.timestamp) {
+      return format.combine(
+        format.timestamp({format: 'YYYY-MM-DD HH:mm:ss.SSS'}),
+        pwmInfoFormat
+      );
+    } else {
+      return pwmInfoFormat;
+    }
   } else {
-    return pwmInfoFormat;
+    return noLevelFormat;
   }
 };
 
 const logger = createLogger({
   level: 'info',
   format: logFormat(),
-  transports: [
-    new transports.Console({
-      format: logFormat(),
-    }),
-  ],
+  transports: [new transports.Console()],
 });
 
 module.exports = logger;

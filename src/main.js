@@ -7,7 +7,7 @@ function prepare() {
   try {
     buildConfig();
   } catch (error) {
-    throw new Error('> POWERMAKE: ERR: Error building configuration.');
+    throw new Error(error);
   }
 }
 

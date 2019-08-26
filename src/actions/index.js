@@ -1,4 +1,5 @@
 const cp = require('child_process');
+const logger = require('../util/logger');
 const shared = require('../shared');
 const {builtin, BuiltinActions} = require('./builtin');
 
@@ -42,11 +43,11 @@ function handleShellType(command) {
   const sub = cp.spawn('sh', ['-c', command]);
 
   sub.stdout.on('data', data => {
-    console.log(data.toString());
+    logger.info(data.toString());
   });
 
   sub.stderr.on('data', data => {
-    console.error(data.toString());
+    logger.info({message: data.toString(), isErr: true});
   });
 }
 

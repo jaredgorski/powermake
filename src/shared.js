@@ -52,14 +52,14 @@ function getConfig() {
   try {
     config = yaml.load(fs.readFileSync(configFile, 'utf-8'));
   } catch (error) {
-    throw new Error('> POWERMAKE: ERR: Misconfigured config.');
+    throw new Error(`Misconfigured config.\n${error}`);
   }
 
   const profileFile = getProfileFilepath(config.profile);
   try {
     profile = yaml.load(fs.readFileSync(profileFile, 'utf-8'));
   } catch (error) {
-    throw new Error('> POWERMAKE: ERR: Misconfigured profile.');
+    throw new Error(`Misconfigured profile.\n${error}`);
   }
 
   return Object.assign({}, config, profile);

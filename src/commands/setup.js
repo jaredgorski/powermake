@@ -1,3 +1,4 @@
+const logger = require('../util/logger');
 const path = require('path');
 const util = require('util');
 
@@ -13,7 +14,7 @@ async function setup(argv) {
   if (argv.projectPath) {
     projectPath = path.resolve(argv.projectPath);
 
-    console.log(`powermake project directory set to: ${projectPath}`);
+    logger.info(`powermake project directory set to: ${projectPath}`);
   } else {
     if (argv.packageName) {
       const pkgJsonSearchToken = `"name": "${argv.packageName}"`;
@@ -23,7 +24,10 @@ async function setup(argv) {
       const {stdout, stderr} = await exec(searchCmd);
 
       if (stderr) {
-        console.error(stderr);
+        logger.info({
+          message: `powermake project directory set to: ${projectPath}`,
+          isErr: true,
+        });
         throw new Error(stderr);
       }
 
@@ -34,11 +38,14 @@ async function setup(argv) {
 
       projectPath = path.resolve(parsedPath);
 
-      console.log(`powermake project directory set to: ${projectPath}`);
+      logger.info(`powermake project directory set to: ${projectPath}`);
     } else {
-      console.error(
-        'Please provide a project path (-p) or an NPM package name (--package)'
-      );
+      logger.info({
+        message:
+          'Please provide a project path (-p)' +
+          ' or an NPM package name (--package)',
+        isErr: true,
+      });
     }
   }
 }

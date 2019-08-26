@@ -1,3 +1,5 @@
+const logger = require('../util/logger');
+
 const BuiltinActions = {
   disconnect: 'disconnect',
   error: 'error',
@@ -10,28 +12,28 @@ const BuiltinActions = {
 const builtin = {
   disconnect: (proc, logx) => {
     logTriggerSnippet('disconnect', logx);
-
     proc.child.disconnect();
-    console.log(`> POWERMAKE: Process ${proc.name.toUpperCase()} disconnected`);
+    logger.info(`Process ${proc.name.toUpperCase()} disconnected`);
   },
   error: (proc, logx) => {
     logTriggerSnippet('error', logx);
-
-    throw new Error(`> POWERMAKE: ERR: ${logx.logData.snippets.error}`);
+    logger.info({
+      message: `Process ${proc.name.toUpperCase()} disconnected`,
+      isErr: true,
+    });
+    throw new Error(logx.logData.snippets.error);
   },
   kill: (proc, logx) => {
     logTriggerSnippet('kill', logx);
-
     proc.child.kill();
-    console.log(`> POWERMAKE: Process ${proc.name.toUpperCase()} killed`);
+    logger.info(`Process ${proc.name.toUpperCase()} killed`);
   },
   logger: (proc, logx) => {
     logx.logHandler(proc, logx);
   },
   pwmexit: (proc, logx) => {
     logTriggerSnippet('pwmexit', logx);
-
-    console.log(`> POWERMAKE: powermake exited`);
+    logger.info(`pwm exited`);
     process.exit();
   },
   silence: () => {
@@ -48,7 +50,7 @@ function logTriggerSnippet(action, logx) {
   const snippet = logx.logData.snippets[action];
 
   if (snippet) {
-    console.log(`> POWERMAKE: Caught trigger: ${snippet}`);
+    logger.info(`Caught trigger: ${snippet}`);
   }
 }
 

@@ -4,15 +4,10 @@ const {actionHandler} = require('./action');
 /**
  * Handles monitors for the current process data.
  * @param {object} proc  The relevant process
- * @param {Buffer} data  The current process data buffer
+ * @param {object} logData  An object containing relevant log data
  */
-function monitorHandler(proc, data) {
+function monitorHandler(proc, logData) {
   const execActions = [];
-  const logData = {
-    data,
-    message: data.toString().trim(),
-    snippets: {},
-  };
 
   for (const monitor of shared.config().monitors) {
     const {process, triggers, actions} = monitor;

@@ -13,13 +13,16 @@ const demoProfileFile = path.join(
 /* eslint-disable */
 const defaultConfig = {
   profile: 'demo/pwm_demo',
+  logging: {
+    timestamp: true,
+  },
 };
 
 const demoProfile = {
   processes: [
     {
       name: 'pwm_demo',
-      command: 'echo "Selected profile not configered! Triggering: Error"',
+      command: 'echo "Selected profile not configured! Triggering: Error"',
       silent: false,
     },
   ],
@@ -31,7 +34,7 @@ const demoProfile = {
           includesString: 'Error',
         },
       },
-      actions: ['echoMe', 'pwmkill'],
+      actions: ['echoMe', 'pwmexit'],
     },
   ],
   actions: [
